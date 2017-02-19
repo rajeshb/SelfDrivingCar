@@ -1,12 +1,4 @@
-#import numpy as np
-#import pandas as pd
-
-#import json
-#import os
-#import math
-#from collections import Counter
-#from scipy import ndimage
-
+import numpy as np
 import tensorflow as tf
 
 from settings import Settings
@@ -15,7 +7,7 @@ from dataloader import DataLoader
 from modelarchitecture import DataModel
 
 # set the random seed
-#np.random.seed(450)
+np.random.seed(450)
 
 # command line flags
 flags = tf.app.flags
@@ -30,6 +22,7 @@ flags.DEFINE_integer('epochs', 20, 'The number of epochs')
 flags.DEFINE_float('learning_rate', 0.001, 'Learning rate')
 flags.DEFINE_float('epoch_sample_size', 25000, 'Number of samples per epoch')
 
+# main 
 def main(_):
 
     # initialize settings

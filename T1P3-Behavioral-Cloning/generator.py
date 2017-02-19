@@ -15,11 +15,8 @@ class DataGenerator:
     def shuffle_split(self, test_split_size=0.2):
         # Shuffle data
         X_input, y_input = shuffle(self.X, self.y)
-
         # Split data
         self.X_train, self.X_valid, self.y_train, self.y_valid = train_test_split(X_input, y_input, test_size=test_split_size)
-
-        #print("Shuffle split, first value (y[0]) : {}".format(y_input[0]))
 
     def get_test_samples_count(self):
         return len(self.y_train)
@@ -30,20 +27,15 @@ class DataGenerator:
     def data_gen(self, X, y, data_augmentation = False):
         while True:
             X_output, y_output = ([],[])
-
             # Shuffle data
             X_input, y_input = shuffle(X, y)
-
             for i in range(len(y_input)):
                 image_file = self.settings.data_path + self.settings.images_path + X_input[i].strip()
-            
                 (img, steering) = utils.get_proceesed_data(image_file, y_input[i], data_augmentation)
                 X_output.append(img)
                 y_output.append(steering)
-
                 if len(y_output) == self.settings.batch_size:
                     break
-
             # yield the batch
             yield (np.array(X_output), np.array(y_output))
 

@@ -36,8 +36,8 @@ def translate_image(image, x_trans, y_trans):
 def preprocess(image):
     #image = crop_image(image)
     #image = resize_image(image)
-    #image = rgb2yuv(image)
-    #image = adjust_gamma(image)
+    image = cv2.GaussianBlur(image, (3,3), 0)
+    image = rgb2yuv(image)
     return image
 
 # random image flip (horizontal)
