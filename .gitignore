@@ -6,6 +6,9 @@ __pycache__/
 # Data folders
 data/
 
+# R History
+.Rhistory
+
 # C extensions
 *.so
 
