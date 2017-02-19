@@ -36,8 +36,8 @@ def translate_image(image, x_trans, y_trans):
 def preprocess(image):
     #image = crop_image(image)
     #image = resize_image(image)
-    image = cv2.GaussianBlur(image, (3,3), 0)
-    image = rgb2yuv(image)
+    #image = cv2.GaussianBlur(image, (3,3), 0)
+    #image = rgb2yuv(image)
     return image
 
 # random image flip (horizontal)
@@ -114,6 +114,6 @@ def get_proceesed_data(image_file_name, steering, data_augmentation):
     image = preprocess(image)
     # Add random effects for train data only
     if data_augmentation == True:
-        if np.random.rand() < 0.5:
+        if True or np.random.rand() < 0.5:
             image, steering = random_effects(image, steering)
     return image, steering
