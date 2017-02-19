@@ -89,11 +89,11 @@ def random_shadow(image):
 
 # random addition of image effects
 def random_effects(image, steering):
-    image, steering = random_flip(image, steering)
+    #image, steering = random_flip(image, steering)
     image, steering = random_translate(image, steering, 100, 10)
     image = random_brightness(image)
     image = random_shadow(image)
-    image = random_gamma(image)
+    #image = random_gamma(image)
     return image, steering
 
 # get the image file name from a path

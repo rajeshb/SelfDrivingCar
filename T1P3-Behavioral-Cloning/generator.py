@@ -36,6 +36,13 @@ class DataGenerator:
                 y_output.append(steering)
                 if len(y_output) == self.settings.batch_size:
                     break
+                if data_augmentation == True and steering > 0.2:
+                    img = utils.flip_image(image_file)
+                    steering = steering * -1.0
+                    X_output.append(img)
+                    y_output.append(steering)
+                    if len(y_output) == self.settings.batch_size:
+                        break
             # yield the batch
             yield (np.array(X_output), np.array(y_output))
 
