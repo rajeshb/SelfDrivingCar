@@ -11,8 +11,7 @@ class DataLoader():
         self.settings = settings
         self.data = self.get_csv_data()
         # Filter excess straight line driving to reduce its influence on the model
-        self.filtered_data = self.filter_zero_steering(threshold)
-        print("Samples before (removing zero steering) : {} and after : {} threshold : {}".format(len(self.data), len(self.filtered_data), threshold))
+        self.filter_zero_steering(threshold)
 
     def get_csv_data(self):
         col_names = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']
@@ -40,10 +39,11 @@ class DataLoader():
                 history.append(steering)
                 indexes.append(idx)
 
-        return self.data.drop(self.data.index[drop_rows])
+        self.filtered_data = self.data.drop(self.data.index[drop_rows])
+        print("Samples before (removing zero steering) : {} and after : {} threshold : {}".format(len(self.data), len(self.filtered_data), threshold))
+        return
 
-
-    def get_data(self, correction = 0.25):
+    def get_data(self, correction = 0.15):
 
         center = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['center'].values] 
         left = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['left'].values] 

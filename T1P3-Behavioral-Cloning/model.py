@@ -39,10 +39,10 @@ def main(_):
     print(settings)
     
     # load, consolidate and augment data
-    X, y = DataLoader(settings).get_data()
+    data_loader = DataLoader(settings)
 
     # data generator for train and test
-    data_generator = DataGenerator(settings, X, y)
+    data_generator = DataGenerator(settings, data_loader)
 
     # setup & fit model
     DataModel(settings).fit(data_generator)
