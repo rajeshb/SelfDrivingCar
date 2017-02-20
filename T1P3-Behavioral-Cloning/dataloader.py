@@ -19,19 +19,26 @@ class DataLoader():
         data_file = self.settings.data_path + self.settings.data_file
         return pd.read_csv(data_file, names=col_names, skiprows=1)
 
-    def filter_zero_steering(self, threshold=3):
+    def filter_zero_steering(self, threshold=5):
         history = deque([])
+        indexes = deque([])
         drop_rows = []
 
         for idx, row in self.data.iterrows():
             steering = row['steering']
 
             history.append(steering)
+            indexes.append(idx)
             if len(history) > threshold:
                 history.popleft()
+                indexes.popleft()
 
             if history.count(0.0) == threshold:
-                drop_rows.append(idx)
+                drop_rows.extend(list(indexes)[1:-1])
+                history.clear()
+                indexes.clear()
+                history.append(steering)
+                indexes.append(idx)
 
         return self.data.drop(self.data.index[drop_rows])
 
