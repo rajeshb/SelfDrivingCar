@@ -29,14 +29,14 @@ class DataLoader():
 
         if history.count(0.0) == threshold:
             drop_rows.append(idx)
-            
+
         return self.data.drop(self.data.index[drop_rows])
 
 
     def get_data(self, correction = 0.20):
 
         # Filter excess straight line driving to reduce its influence on the model
-        filtered_data = self.filter_zero_steering(self, threshold=3)
+        filtered_data = self.filter_zero_steering()
 
         center = [utils.get_image_file_name(file_path) for file_path in filtered_data['center'].values] 
         left = [utils.get_image_file_name(file_path) for file_path in filtered_data['left'].values] 
