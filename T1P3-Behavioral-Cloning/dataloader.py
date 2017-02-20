@@ -26,12 +26,12 @@ class DataLoader():
         for idx, row in self.data.iterrows():
             steering = row['steering']
 
-        history.append(steering)
-        if len(history) > threshold:
-            history.popleft()
+            history.append(steering)
+            if len(history) > threshold:
+                history.popleft()
 
-        if history.count(0.0) == threshold:
-            drop_rows.append(idx)
+            if history.count(0.0) == threshold:
+                drop_rows.append(idx)
 
         return self.data.drop(self.data.index[drop_rows])
 
