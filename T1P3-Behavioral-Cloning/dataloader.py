@@ -7,12 +7,12 @@ from collections import deque
 # data loader class
 class DataLoader():
 
-    def __init__(self, settings):
+    def __init__(self, settings, threshold=5):
         self.settings = settings
         self.data = self.get_csv_data()
         # Filter excess straight line driving to reduce its influence on the model
-        self.filtered_data = self.filter_zero_steering()
-        print("Samples before (removing zero steering) : {} and after : {}".format(len(self.data), len(self.filtered_data)))
+        self.filtered_data = self.filter_zero_steering(threshold)
+        print("Samples before (removing zero steering) : {} and after : {} threshold : {}".format(len(self.data), len(self.filtered_data), threshold))
 
     def get_csv_data(self):
         col_names = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']

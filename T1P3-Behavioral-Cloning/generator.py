@@ -80,6 +80,7 @@ class DataGenerator:
                 if len(y_output) == self.settings.batch_size:
                     break
 
+                '''
                 if data_augmentation == True and abs(steering) > 0.05:
                     img = utils.flip_image(utils.load_image(image_file))
                     steering = steering * -1.0
@@ -88,7 +89,8 @@ class DataGenerator:
                     
                     if len(y_output) == self.settings.batch_size:
                         break
-
+                '''
+                
             # yield the batch
             yield (np.array(X_output), np.array(y_output))
 
