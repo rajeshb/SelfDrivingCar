@@ -11,8 +11,8 @@ class DataLoader():
         self.settings = settings
         self.data = self.get_csv_data()
         # Filter excess straight line driving to reduce its influence on the model
-        self.filter_zero_steering(threshold)
-        self.filter_zero_steering(threshold)
+        #self.filter_zero_steering(threshold)
+        self.normalize_distribution(self.data)
 
     def get_csv_data(self):
         col_names = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']
@@ -42,12 +42,11 @@ class DataLoader():
 
         self.filtered_data = self.data.drop(self.data.index[drop_rows])
         print("Samples before (removing zero steering) : {} and after : {} threshold : {}".format(len(self.data), len(self.filtered_data), threshold))
-        self.normalize_distribution()
-        return
+        return self.filtered_data
 
-    def normalize_distribution(self):
-        num_bins = 21
-        angles = self.filtered_data['steering'].values
+    def normalize_distribution(self, data):
+        num_bins = 41
+        angles = data['steering'].values
         avg_samples_per_bin = len(angles)/num_bins
         hist, bins = np.histogram(angles, num_bins)
         keep_probs = []
@@ -63,10 +62,11 @@ class DataLoader():
                 if angles[i] > bins[j] and angles[i] <= bins[j+1]:
                     if np.random.rand() > keep_probs[j]:
                         remove_list.append(i)
-        self.normalized_data = self.filtered_data.drop(self.filtered_data.index[remove_list])
-        print("Samples before normalization : {} and after : {}".format(len(self.filtered_data), len(self.normalized_data)))
+        self.normalized_data = data.drop(data.index[remove_list])
+        print("Samples before normalization : {} and after : {}".format(len(data), len(self.normalized_data)))
+        return self.normalized_data
 
-    def get_data(self, correction = 0.15):
+    def get_data(self, correction = 0.12):
 
         center = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['center'].values] 
         left = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['left'].values] 
