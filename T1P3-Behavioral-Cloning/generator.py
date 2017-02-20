@@ -13,6 +13,7 @@ class DataGenerator:
         self.X = X
         self.y = y
 
+        '''
         print("Samples (before stratified augmentation) : {}".format(len(self.y)))
         single_tokens = [k for k, v in Counter(y).items() if v == 1 ]
 
@@ -33,17 +34,18 @@ class DataGenerator:
             self.y = np.concatenate((y,y_tmp), axis=0)
 
         print("Samples (after stratified augmentation) : {}".format(len(self.y)))
-
+        '''
         self.shuffle_split()
         print("Train samples count : {} Valid samples count : {}".format(len(self.y_train), len(self.y_valid)))
 
     def shuffle_split(self, test_split_size=0.2):
         # Shuffle data
-        #X_input, y_input = shuffle(self.X, self.y)
+        X_input, y_input = shuffle(self.X, self.y)
 
         # Split data
-        #self.X_train, self.X_valid, self.y_train, self.y_valid = train_test_split(X_input, y_input, test_size=test_split_size)
+        self.X_train, self.X_valid, self.y_train, self.y_valid = train_test_split(X_input, y_input, test_size=test_split_size)
 
+        '''
         X_input, y_input = shuffle(self.X, self.y)
 
         if len(y_input) * test_split_size < len(Counter(y_input)):
@@ -55,7 +57,7 @@ class DataGenerator:
         for train_index, valid_index in sss.split(self.X, self.y):
             self.X_train, self.X_valid = self.X[train_index], self.X[valid_index]
             self.y_train, self.y_valid = self.y[train_index], self.y[valid_index]
-
+        '''
 
     def get_test_samples_count(self):
         return len(self.y_train)
