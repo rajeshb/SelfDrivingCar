@@ -13,8 +13,9 @@ class DataGenerator:
         self.X = X
         self.y = y
 
-        print("X len (before data augmentation) : {}".format(len(X)))
+        print("Samples (before stratified augmentation) : {}".format(len(self.y)))
         single_tokens = [k for k, v in Counter(y).items() if v == 1 ]
+        
         if len(single_tokens) > 0:
 
             single_token_indexes = [i for i,x in enumerate(y) if x in single_tokens]
@@ -31,9 +32,10 @@ class DataGenerator:
             self.X = np.concatenate((X,X_tmp), axis=0)
             self.y = np.concatenate((y,y_tmp), axis=0)
 
-        print("X len (after data augmentation) : {}".format(len(self.X)))
+        print("Samples (after stratified augmentation) : {}".format(len(self.y)))
 
         self.shuffle_split()
+        print("Train samples count : {} Valid samples count : {}".format(len(self.y_train), len(self.y_valid)))
 
     def shuffle_split(self, test_split_size=0.2):
         # Shuffle data
@@ -54,7 +56,6 @@ class DataGenerator:
             self.X_train, self.X_valid = self.X[train_index], self.X[valid_index]
             self.y_train, self.y_valid = self.y[train_index], self.y[valid_index]
 
-        print("Train samples count : {} Valid samples count : {}".format(len(self.X_valid), len(self.y_valid)))
 
     def get_test_samples_count(self):
         return len(self.y_train)

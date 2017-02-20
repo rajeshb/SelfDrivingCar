@@ -10,6 +10,9 @@ class DataLoader():
     def __init__(self, settings):
         self.settings = settings
         self.data = self.get_csv_data()
+        # Filter excess straight line driving to reduce its influence on the model
+        self.filtered_data = self.filter_zero_steering()
+        print("Samples before (removing zero steering) : {} and after : {}".format(len(self.data), len(self.filtered_data)))
 
     def get_csv_data(self):
         col_names = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']
@@ -35,16 +38,13 @@ class DataLoader():
 
     def get_data(self, correction = 0.20):
 
-        # Filter excess straight line driving to reduce its influence on the model
-        filtered_data = self.filter_zero_steering()
-
-        center = [utils.get_image_file_name(file_path) for file_path in filtered_data['center'].values] 
-        left = [utils.get_image_file_name(file_path) for file_path in filtered_data['left'].values] 
-        right = [utils.get_image_file_name(file_path) for file_path in filtered_data['right'].values] 
+        center = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['center'].values] 
+        left = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['left'].values] 
+        right = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['right'].values] 
         steering = filtered_data['steering'].values
 
         X = np.concatenate((center, left, right), axis=0)
         y = np.concatenate((steering, steering + correction, steering - correction), axis=0)
 
-        print("X (number of samples) : {}".format(len(X)))
+        print("Samples (after merging left, right camera images) : {}".format(len(X)))
         return X, y
