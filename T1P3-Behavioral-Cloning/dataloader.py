@@ -29,8 +29,8 @@ class DataLoader():
 
         if history.count(0.0) == threshold:
             drop_rows.append(idx)
-
-    return self.data.drop(self.data.index[drop_rows])
+            
+        return self.data.drop(self.data.index[drop_rows])
 
 
     def get_data(self, correction = 0.20):
