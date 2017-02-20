@@ -7,12 +7,21 @@ from collections import deque
 # data loader class
 class DataLoader():
 
-    def __init__(self, settings, threshold=5):
+    def __init__(self, settings, threshold=5, correction=0.12):
         self.settings = settings
         self.data = self.get_csv_data()
+
+        center = [utils.get_image_file_name(file_path) for file_path in self.data['center'].values] 
+        left = [utils.get_image_file_name(file_path) for file_path in self.data['left'].values] 
+        right = [utils.get_image_file_name(file_path) for file_path in self.data['right'].values] 
+        steering = self.data['steering'].values
+
+        self.X_combined = np.concatenate((center, left, right), axis=0)
+        self.y_combined = np.concatenate((steering, steering + correction, steering - correction), axis=0)
+
         # Filter excess straight line driving to reduce its influence on the model
         #self.filter_zero_steering(threshold)
-        self.normalize_distribution(self.data)
+        self.X, self.y = self.normalize_distribution()
 
     def get_csv_data(self):
         col_names = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']
@@ -44,9 +53,9 @@ class DataLoader():
         print("Samples before (removing zero steering) : {} and after : {} threshold : {}".format(len(self.data), len(self.filtered_data), threshold))
         return self.filtered_data
 
-    def normalize_distribution(self, data):
+    def normalize_distribution(self):
         num_bins = 41
-        angles = data['steering'].values
+        angles = self.y_combined
         avg_samples_per_bin = len(angles)/num_bins
         hist, bins = np.histogram(angles, num_bins)
         keep_probs = []
@@ -62,19 +71,10 @@ class DataLoader():
                 if angles[i] > bins[j] and angles[i] <= bins[j+1]:
                     if np.random.rand() > keep_probs[j]:
                         remove_list.append(i)
-        self.normalized_data = data.drop(data.index[remove_list])
-        print("Samples before normalization : {} and after : {}".format(len(data), len(self.normalized_data)))
-        return self.normalized_data
+        self.X_normalized = np.delete(self.X_combined, remove_list, axis=0)
+        self.y_normalized = np.delete(self.y_combined, remove_list, axis=0)
+        print("Samples before normalization : {} and after : {}".format(len(self.y_combined), len(self.y_normalized)))
+        return self.X_normalized, self.y_normalized
 
-    def get_data(self, correction = 0.12):
-
-        center = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['center'].values] 
-        left = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['left'].values] 
-        right = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['right'].values] 
-        steering = self.normalized_data['steering'].values
-
-        X = np.concatenate((center, left, right), axis=0)
-        y = np.concatenate((steering, steering + correction, steering - correction), axis=0)
-
-        print("Samples (after merging left, right camera images) : {}".format(len(X)))
-        return X, y
+    def get_data(self):
+        return self.X_normalized, self.y_normalized

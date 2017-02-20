@@ -15,13 +15,8 @@ class DataGenerator:
 
     def shuffle_split(self, test_split_size=0.2):
 
-        # Random threhold from 3 - 10
-        #from random import randint
-        #self.dataloader.filter_zero_steering(randint(3,10))
-        self.dataloader.normalize_distribution(self.dataloader.data)
-        
-        # get data
-        X, y = self.dataloader.get_data()
+        # Ger data
+        X, y = self.dataloader.normalize_distribution()
 
         # Shuffle data
         X_input, y_input = shuffle(X, y)
