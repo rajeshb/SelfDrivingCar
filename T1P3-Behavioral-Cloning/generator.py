@@ -15,7 +15,7 @@ class DataGenerator:
 
         print("Samples (before stratified augmentation) : {}".format(len(self.y)))
         single_tokens = [k for k, v in Counter(y).items() if v == 1 ]
-        
+
         if len(single_tokens) > 0:
 
             single_token_indexes = [i for i,x in enumerate(y) if x in single_tokens]
@@ -78,6 +78,7 @@ class DataGenerator:
                 if len(y_output) == self.settings.batch_size:
                     break
 
+                '''
                 if data_augmentation == True and abs(steering) > 0.05:
                     img = utils.flip_image(utils.load_image(image_file))
                     steering = steering * -1.0
@@ -86,7 +87,7 @@ class DataGenerator:
                     
                     if len(y_output) == self.settings.batch_size:
                         break
-
+                '''
             # yield the batch
             yield (np.array(X_output), np.array(y_output))
 
