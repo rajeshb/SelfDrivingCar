@@ -43,7 +43,7 @@ class DataLoader():
         return self.data.drop(self.data.index[drop_rows])
 
 
-    def get_data(self, correction = 0.10):
+    def get_data(self, correction = 0.25):
 
         center = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['center'].values] 
         left = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['left'].values] 
