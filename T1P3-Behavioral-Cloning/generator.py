@@ -54,6 +54,8 @@ class DataGenerator:
             self.X_train, self.X_valid = self.X[train_index], self.X[valid_index]
             self.y_train, self.y_valid = self.y[train_index], self.y[valid_index]
 
+        print("Train samples count : {} Valid samples count : {}".format(len(self.X_valid), len(self.y_valid)))
+
     def get_test_samples_count(self):
         return len(self.y_train)
 
