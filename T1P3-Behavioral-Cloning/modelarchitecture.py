@@ -88,7 +88,7 @@ class DataModel():
         model_checkpoint = ModelCheckpoint(filepath = 'model-best.h5', verbose = 0, save_best_only=True, monitor='val_loss')
 
         # stop training when validation loss fails to decrease
-        early_stopping = EarlyStopping(monitor='val_loss', patience=1, verbose=1)
+        early_stopping = EarlyStopping(monitor='val_loss', patience=2, verbose=1)
 
         # fit the model
         self.model.fit_generator(
