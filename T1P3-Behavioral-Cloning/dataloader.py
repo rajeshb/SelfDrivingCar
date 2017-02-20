@@ -12,6 +12,7 @@ class DataLoader():
         self.data = self.get_csv_data()
         # Filter excess straight line driving to reduce its influence on the model
         self.filter_zero_steering(threshold)
+        self.filter_zero_steering(threshold)
 
     def get_csv_data(self):
         col_names = ['center', 'left', 'right', 'steering', 'throttle', 'brake', 'speed']
@@ -41,14 +42,36 @@ class DataLoader():
 
         self.filtered_data = self.data.drop(self.data.index[drop_rows])
         print("Samples before (removing zero steering) : {} and after : {} threshold : {}".format(len(self.data), len(self.filtered_data), threshold))
+        self.normalize_distribution()
         return
+
+    def normalize_distribution(self):
+        num_bins = 21
+        angles = self.filtered_data['steering'].values
+        avg_samples_per_bin = len(angles)/num_bins
+        hist, bins = np.histogram(angles, num_bins)
+        keep_probs = []
+        target = avg_samples_per_bin * .5
+        for i in range(num_bins):
+            if hist[i] < target:
+                keep_probs.append(1.)
+            else:
+                keep_probs.append(1./(hist[i]/target))
+        remove_list = []
+        for i in range(len(angles)):
+            for j in range(num_bins):
+                if angles[i] > bins[j] and angles[i] <= bins[j+1]:
+                    if np.random.rand() > keep_probs[j]:
+                        remove_list.append(i)
+        self.normalized_data = self.filtered_data.drop(self.filtered_data.index[remove_list])
+        print("Samples before normalization : {} and after : {}".format(len(self.filtered_data), len(self.normalized_data)))
 
     def get_data(self, correction = 0.15):
 
-        center = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['center'].values] 
-        left = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['left'].values] 
-        right = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['right'].values] 
-        steering = self.filtered_data['steering'].values
+        center = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['center'].values] 
+        left = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['left'].values] 
+        right = [utils.get_image_file_name(file_path) for file_path in self.normalized_data['right'].values] 
+        steering = self.normalized_data['steering'].values
 
         X = np.concatenate((center, left, right), axis=0)
         y = np.concatenate((steering, steering + correction, steering - correction), axis=0)
