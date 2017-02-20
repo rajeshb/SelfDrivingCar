@@ -41,7 +41,7 @@ class DataLoader():
         center = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['center'].values] 
         left = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['left'].values] 
         right = [utils.get_image_file_name(file_path) for file_path in self.filtered_data['right'].values] 
-        steering = filtered_data['steering'].values
+        steering = self.filtered_data['steering'].values
 
         X = np.concatenate((center, left, right), axis=0)
         y = np.concatenate((steering, steering + correction, steering - correction), axis=0)
