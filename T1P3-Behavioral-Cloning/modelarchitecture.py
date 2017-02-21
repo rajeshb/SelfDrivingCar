@@ -81,9 +81,6 @@ class DataModel():
         # shuffle and split training and validation data for every epoch, at the beginning of each epoch
         epoch_begin_callback = EpochCallback(generator)
     
-        # save the weights only when validation loss improves
-        #model_checkpoint = ModelCheckpoint(filepath = 'model-best.h5', verbose = 0, save_weights_only=True, save_best_only=True, monitor='val_loss')
-
         # save both weights and model for the best
         model_checkpoint = ModelCheckpoint(filepath = 'model-best.h5', verbose = 0, save_best_only=True, monitor='val_loss')
 
