@@ -37,7 +37,7 @@ You're reading it!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first `Load and Visualize data sections` of the IPython notebook (`P5 - Vehicle Detection - Features Extraction & Training Model`).
+The code for this step is contained in the first `Load and Visualize data` sections of the IPython notebook (`P5 - Vehicle Detection - Features Extraction & Training Model`).
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -53,7 +53,7 @@ I tried various combinations of parameters and based on the accuracy results, fi
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM with selected HOG features, as explained in `Save Model with LinearSVC section` of `P5 - Vehicle Detection - Features Extraction & Training Model` python notebook.
+I trained a linear SVM with selected HOG features, as explained in `Save Model with LinearSVC` section of `P5 - Vehicle Detection - Features Extraction & Training Model` python notebook.
 
 ### Sliding Window Search
 
@@ -69,9 +69,11 @@ Instead of getting HOG features for each of the sliding window, HOG features of 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on three scales (1.0, 1.5 and 2.0) using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result. For training the classifier, 20% samples are used for cross validation. I have utilized stratified option on splitting the samples for training & validation, appropriate dist
+Ultimately I searched on three scales (1.0, 1.5 and 2.0) using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result. 
 
-Here is an example image:
+For training the classifier, 20% samples are used for cross validation. Also, I have utilized stratify option on splitting the samples for training & validation for stratified distribution of vehicles and non-vehicles.
+
+Here is an example image of the pipeline:
 
 ![alt text][image10]
 ---
@@ -83,7 +85,12 @@ Here's a [link to my video result](./output/project_video_out.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+* I recorded the positions of positive detections in each frame of the video.  
+* From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  
+* I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  
+* I then assumed each blob corresponded to a vehicle.  
+* I constructed bounding boxes to cover the area of each blob detected.
+* Refer to `pipeline` method in `VehicleDetection` class of the of `P5 - Vehicle Detection - Detect Vehicles` python notebook
 
 ##### Original image
 ![alt text][image4]
