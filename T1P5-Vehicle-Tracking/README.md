@@ -12,13 +12,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 [image1]: ./output/car_not_car.png "Sample data"
-[image2]: ./output/HOG_example.jpg "HOG visualization"
-[image3]: ./output/sliding_windows1.jpg "Sliding window"
+[image2]: ./output/HOG_example.png "HOG visualization"
+[image3]: ./output/sliding_windows1.png "Sliding window"
 [image4]: ./test_images/test6.jpg "Original image"
-[image5]: ./output/test6_hotwindows.png "Hot windows"
-[image6]: ./output/test6_heatmap.png "Heatmap visualization"
-[image7]: ./output/test6_labels.png "Labels visualization"
-[image8]: ./output/test6_final.png "Final output"
+[image5]: ./output/test6_hotwindows.jpg "Hot windows"
+[image6]: ./output/test6_heatmap.jpg "Heatmap visualization"
+[image7]: ./output/test6_labels.jpg "Labels visualization"
+[image8]: ./output/test6_final.jpg "Final output"
 [image9]: ./output/false_positive.png "False positives elimination"
 [image10]: ./output/process_success.png "Vehicle identification"
 [video1]: ./output/project_video_out.mp4
@@ -37,7 +37,7 @@ You're reading it!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first "Load and Visualize data sections" of the IPython notebook (P5 - Vehicle Detection - Features Extraction & Training Model).
+The code for this step is contained in the first `Load and Visualize data sections` of the IPython notebook (`P5 - Vehicle Detection - Features Extraction & Training Model`).
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -79,7 +79,7 @@ Here is an example image:
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./output/project_video_out.mp4) or here ![alt text][video1]
+Here's a [link to my video result](./output/project_video_out.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
@@ -102,8 +102,8 @@ False positives are filtered using thresholding and heatmap history, as shown in
 
 ### References
 
-#### 1. [P5 - Vehicle Detection - Features Extraction & Training Model]("./P5 - Vehicle Detection - Features Extraction & Training Model.ipynb")
-#### 2. [P5 - Vehicle Detection - Detect Vehicles]("./P5 - Vehicle Detection - Detect Vehicles.ipynb")
+#### 1. [P5 - Vehicle Detection - Features Extraction & Training Model](./P5 - Vehicle Detection - Features Extraction & Training Model.ipynb)
+#### 2. [P5 - Vehicle Detection - Detect Vehicles](./P5 - Vehicle Detection - Detect Vehicles.ipynb)
 
 ### Discussion
 
