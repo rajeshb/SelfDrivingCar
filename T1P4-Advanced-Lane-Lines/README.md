@@ -61,10 +61,10 @@ Refer to `section 3` of the IPython notebook `P4 - Data Analysis` for the implem
 
 ```
 # source points
-top_left = (585, 455)
-top_right = (705, 455)
-bottom_left = (190, 720)
-bottom_right = (1130, 720)
+top_left = (588, 454)
+top_right = (692, 454)
+bottom_left = (203, 720)
+bottom_right = (1105, 720)
 
 src = np.float32([top_right,
                   bottom_right, 
