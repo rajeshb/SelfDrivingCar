@@ -126,7 +126,8 @@ Refer to `section 8.7` in the IPython notebook `P4 - Data Analysis`.  Here is an
 
 ##### Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./output/project_video_out.mp4)
+* Project video : Here's a [link to the project video result](./output/project_video_out.mp4), also available [here at youtube](https://youtu.be/wzrTNAlSwtM).
+* Challenge video : Here is a [link to the challenge video result](./output/challenge_video_out.mp4). Please note that this is still a work-in-progress.
 
 ---
 
@@ -140,6 +141,7 @@ Here's a [link to my video result](./output/project_video_out.mp4)
 
 ##### Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-* One of the biggest challenge was to come up with color/gradient tranform thresholds for different road conditions (shadows, contrast and poor visibility of the lane).
-* Pipeline is not robust enough for challenging road conditions like highly curvy lanes since the implementation utlizes only 2nd order poly fit.
+* One of the biggest challenge was to come up with color/gradient tranform thresholds that works well for different road conditions (shadows, contrast and poor visibility of the lane).
+* Current implementation of the Pipeline, works reasonably well for straightforward usecases (clear lane lines for the most part) and is not robust or challenging road conditions.
+* Also, the current implementation is based on 2nd order poly fit, this could be a limitation on challenging road conditions like steep curves for example.
 * It would be interesting to explore if higher order poly fit could be tried to handle more challenging road conditions.
