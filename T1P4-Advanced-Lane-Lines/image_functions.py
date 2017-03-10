@@ -470,7 +470,9 @@ def overlay_image(undist, binary_warped, Minv, left_fit, right_fit):
 
 	# Recast the x and y points into usable format for cv2.fillPoly()
 	pts_left = np.array([np.transpose(np.vstack([left_fitx, ploty]))])
+	cv2.drawContours(color_warp, np.int_([pts_left]), -1, (255,0,0), thickness=30)
 	pts_right = np.array([np.flipud(np.transpose(np.vstack([right_fitx, ploty])))])
+	cv2.drawContours(color_warp, np.int_([pts_right]), -1, (0,0,255), thickness=30)
 	pts = np.hstack((pts_left, pts_right))
 
 	# Draw the lane onto the warped blank image
