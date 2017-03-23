@@ -15,3 +15,20 @@
 ### 4. [Advanced Lane Lines](./T1P4-Advanced-Lane-Lines)
 
 ### 5. [Vehicle Tracking](./T1P5-Vehicle-Tracking)
+
+---
+
+## Term-1 Labs
+
+---
+
+### 1. [TensorFlow](./CarND-TensorFlow-Lab)
+
+### 2. [Keras](./CarND-Keras-Lab)
+
+### 3. [LeNet](./CarND-LeNet-Lab)
+
+### 4. [AlexNet](./CarND-Alexnet-Feature-Extraction)
+
+### 5. [Transfer Learning](./CarND-Transfer-Learning-Lab)
+
